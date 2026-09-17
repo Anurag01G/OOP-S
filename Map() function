@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string>
+#include<map>
+using namespace std;
+
+int main()
+{
+    map < string, long long > population;
+
+    population["Maharashtra"]   = 12000000000;
+    population["Gujarat"]       = 1234567890;
+    population["Karnataka"]     = 1290860348;
+    population["Rajasthan"]     = 1386938;
+    population["Tamil Nadu"]    = 237597098;
+    population["Utterpradesh"]  = 23753856;
+
+    string stateName;
+
+    cout<<"Enter the name of the state : ";
+    getline(cin, stateName);
+
+    map< string, long long >::iterator it = population.find(stateName);
+
+    if (it!= population.end())
+    {
+        cout<<"Population of "<< stateName<<" = "<<it-> second<<endl;
+    }
+    else
+    {
+        cout<<"State not found in the map"<<endl;
+    }
+    return 0;
+}
