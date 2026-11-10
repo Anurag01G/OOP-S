@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+class GameScore
+{
+    int score;
+
+public:
+    // Default constructor
+    GameScore()
+    {
+        score = 0;
+    }
+
+    // Parameterized constructor
+    GameScore(int s)
+    {
+        score = s;
+    }
+
+    // Overload + operator
+    GameScore operator+(GameScore g)
+    {
+        GameScore temp;
+        temp.score = score + g.score;
+        return temp;
+    }
+
+    // Input operator
+    friend istream& operator>>(istream& in, GameScore& g)
+    {
+        cout << "Enter score: ";
+        in >> g.score;
+        return in;
+    }
+
+    // Output operator
+    friend ostream& operator<<(ostream& out, GameScore g)
+    {
+        out << g.score << " points";
+        return out;
+    }
+};
+
+int main()
+{
+    GameScore player1, player2, total;
+
+    cout << "Player 1\n";
+    cin >> player1;
+
+    cout << "Player 2\n";
+    cin >> player2;
+
+    total = player1 + player2;
+
+    cout << "\nPlayer 1 Score: " << player1;
+    cout << "\nPlayer 2 Score: " << player2;
+    cout << "\nTotal Score: " << total;
+
+    return 0;
+}
