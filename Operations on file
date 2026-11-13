@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    const string filename = "sample_output.txt";
+
+    // Step 1 & 2: Create output file and write information into it
+    ofstream outFile(filename);
+
+    // Check if the file was created/opened successfully
+    if (!outFile.is_open())
+    {
+        cerr << "Error: Could not create or open the output file." << endl;
+        return 1;
+    }
+
+    cout << "Writing data to '" << filename << "'...\n";
+
+    outFile << "Line 1: Hello, C++ File I/O!\n";
+    outFile << "Line 2: Demonstration of writing to a file.\n";
+    outFile << "Line 3: Storing integer value = " << 100 << "\n";
+    outFile << "Line 4: NMIET " << "\n";
+    outFile << "Line 5: Prasad Dhore is Good Employee " << "\n";
+
+    // Step 3: Close the output file stream
+    outFile.close();
+
+    cout << "File closed successfully after writing.\n\n";
+
+    // Step 4 & 5: Reopen the file as an input file and display data
+    ifstream inFile(filename);
+
+    // Check if the file opened successfully for reading
+    if (!inFile.is_open())
+    {
+        cerr << "Error: Could not open the file for reading." << endl;
+        return 1;
+    }
+
+    cout << "--- Contents of '" << filename << "' ---" << endl;
+
+    string line;
+
+    // Read the file line by line until EOF
+    while (getline(inFile, line))
+    {
+        cout << line << endl;
+    }
+
+    // Close the input file stream
+    inFile.close();
+
+    cout << "------------------------------------------------" << endl;
+
+    return 0;
+}
