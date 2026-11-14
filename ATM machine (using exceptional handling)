@@ -1,0 +1,134 @@
+
+#include<iostream>
+#include<exception>
+using namespace std;
+
+class ATM
+{
+    double balance;
+
+    public:
+
+    ATM()
+    {
+        balance = 5000;
+    }
+
+    void checkBalance()
+    {
+        cout<<"\nCurrent Balance: Rs. "<<balance;
+    }
+
+    void deposit()
+    {
+        double amount;
+
+        cout<<"\nEnter amount to deposit: ";
+        cin>>amount;
+
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000,'\n');
+            throw invalid_argument("Invalid Input!");
+        }
+
+        if(amount <= 0)
+            throw invalid_argument("Amount must be positive!");
+
+        balance = balance + amount;
+
+        cout<<"\nAmount Deposited Successfully!";
+    }
+
+    void withdraw()
+    {
+        double amount;
+
+        cout<<"\nEnter amount to withdraw: ";
+        cin>>amount;
+
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000,'\n');
+            throw invalid_argument("Invalid Input!");
+        }
+
+        if(amount <= 0)
+            throw invalid_argument("Amount must be positive!");
+
+        if(amount > balance)
+            throw runtime_error("Insufficient Funds!");
+
+        balance = balance - amount;
+
+        cout<<"\nPlease Collect Your Cash.";
+    }
+};
+
+int main()
+{
+    ATM a;
+    int choice;
+
+    do
+    {
+        cout<<"\n\n===== ATM MACHINE =====";
+        cout<<"\n1. Check Balance";
+        cout<<"\n2. Deposit Money";
+        cout<<"\n3. Withdraw Money";
+        cout<<"\n4. Exit";
+
+        cout<<"\nEnter your choice: ";
+        cin>>choice;
+
+        try
+        {
+            if(cin.fail())
+            {
+                cin.clear();
+                cin.ignore(1000,'\n');
+                throw invalid_argument("Invalid Choice!");
+            }
+
+            switch(choice)
+            {
+                case 1:
+                    a.checkBalance();
+                    break;
+
+                case 2:
+                    a.deposit();
+                    break;
+
+                case 3:
+                    a.withdraw();
+                    break;
+
+                case 4:
+                    cout<<"\nThank You!";
+                    break;
+
+                default:
+                    throw invalid_argument("Invalid Choice!");
+            }
+        }
+
+        catch(invalid_argument &e)
+        {
+            cout<<"\nException: "<<e.what();
+        }
+
+        catch(runtime_error &e)
+        {
+            cout<<"\nException: "<<e.what();
+        }
+
+        // Finally-like block
+        cout<<"\n\nTransaction Completed.";
+
+    }while(choice != 4);
+
+    return 0;
+}
