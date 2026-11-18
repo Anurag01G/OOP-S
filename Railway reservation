@@ -1,0 +1,106 @@
+
+#include<iostream>
+using namespace std;
+
+class Railway
+{
+    int seats;
+
+    public:
+
+    Railway()
+    {
+        seats = 10;
+    }
+
+    void checkSeats()
+    {
+        cout<<"\nAvailable Seats: "<<seats;
+    }
+
+    void bookTicket()
+    {
+        int n;
+
+        cout<<"\nEnter number of tickets: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid ticket quantity!";
+
+        if(n > seats)
+            throw "Not enough seats available!";
+
+        seats = seats - n;
+
+        cout<<"\nTickets Booked Successfully!";
+    }
+
+    void cancelTicket()
+    {
+        int n;
+
+        cout<<"\nEnter tickets to cancel: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid ticket quantity!";
+
+        seats = seats + n;
+
+        cout<<"\nTickets Cancelled Successfully!";
+    }
+};
+
+int main()
+{
+    Railway r;
+    int choice;
+
+    do
+    {
+        cout<<"\n\n===== RAILWAY BOOKING =====";
+        cout<<"\n1. Check Available Seats";
+        cout<<"\n2. Book Ticket";
+        cout<<"\n3. Cancel Ticket";
+        cout<<"\n4. Exit";
+
+        cout<<"\nEnter your choice: ";
+        cin>>choice;
+
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                    r.checkSeats();
+                    break;
+
+                case 2:
+                    r.bookTicket();
+                    break;
+
+                case 3:
+                    r.cancelTicket();
+                    break;
+
+                case 4:
+                    cout<<"\nThank You!";
+                    break;
+
+                default:
+                    throw "Invalid Choice!";
+            }
+        }
+
+        catch(const char *msg)
+        {
+            cout<<"\nException: "<<msg;
+        }
+
+        cout<<"\nTransaction Completed.";
+
+    }while(choice != 4);
+
+    return 0;
+}
