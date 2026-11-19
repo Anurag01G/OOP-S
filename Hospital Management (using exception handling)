@@ -1,0 +1,109 @@
+
+#include<iostream>
+using namespace std;
+
+class Hospital
+{
+    int beds;
+
+    public:
+
+    Hospital()
+    {
+        beds = 5;
+    }
+
+    void checkBeds()
+    {
+        cout<<"\nAvailable Beds: "<<beds;
+    }
+
+    void admitPatient()
+    {
+        int n;
+
+        cout<<"\nEnter number of patients: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid Patient Count!";
+
+        if(n > beds)
+            throw "No Sufficient Beds Available!";
+
+        beds = beds - n;
+
+        cout<<"\nPatient Admitted Successfully!";
+    }
+
+    void dischargePatient()
+    {
+        int n;
+
+        cout<<"\nEnter number of patients to discharge: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid Patient Count!";
+
+        if(n > 5 - beds)
+            throw "Invalid Discharge Count!";
+
+        beds = beds + n;
+
+        cout<<"\nPatient Discharged Successfully!";
+    }
+};
+
+int main()
+{
+    Hospital h;
+    int choice;
+
+    do
+    {
+        cout<<"\n\n===== HOSPITAL MANAGEMENT =====";
+        cout<<"\n1. Check Available Beds";
+        cout<<"\n2. Admit Patient";
+        cout<<"\n3. Discharge Patient";
+        cout<<"\n4. Exit";
+
+        cout<<"\nEnter your choice: ";
+        cin>>choice;
+
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                    h.checkBeds();
+                    break;
+
+                case 2:
+                    h.admitPatient();
+                    break;
+
+                case 3:
+                    h.dischargePatient();
+                    break;
+
+                case 4:
+                    cout<<"\nThank You!";
+                    break;
+
+                default:
+                    throw "Invalid Choice!";
+            }
+        }
+
+        catch(const char *msg)
+        {
+            cout<<"\nException: "<<msg;
+        }
+
+        cout<<"\nOperation Completed.";
+
+    }while(choice != 4);
+
+    return 0;
+}
