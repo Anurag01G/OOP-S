@@ -1,0 +1,151 @@
+
+#include<iostream>
+using namespace std;
+
+class FoodOrder
+{
+    int total;
+    int bill;
+
+    public:
+
+    FoodOrder()
+    {
+        total = 0;
+        bill = 0;
+    }
+
+    void displayMenu()
+    {
+        cout<<"\n\n===== FOOD MENU =====";
+        cout<<"\n1. Pizza       - Rs. 200";
+        cout<<"\n2. Burger      - Rs. 100";
+        cout<<"\n3. Sandwich    - Rs. 80";
+        cout<<"\n4. Pasta       - Rs. 150";
+    }
+
+    void orderFood()
+    {
+        int choice, quantity, price;
+
+        displayMenu();
+
+        cout<<"\nEnter food choice: ";
+        cin>>choice;
+
+        cout<<"Enter quantity: ";
+        cin>>quantity;
+
+        if(quantity <= 0)
+            throw "Invalid Quantity!";
+
+        switch(choice)
+        {
+            case 1:
+                price = 200;
+                break;
+
+            case 2:
+                price = 100;
+                break;
+
+            case 3:
+                price = 80;
+                break;
+
+            case 4:
+                price = 150;
+                break;
+
+            default:
+                throw "Invalid Food Choice!";
+        }
+
+        bill = price * quantity;
+        total = total + bill;
+
+        cout<<"\nFood Ordered Successfully!";
+    }
+
+    void showBill()
+    {
+        cout<<"\nTotal Bill: Rs. "<<total;
+    }
+
+    void payment()
+    {
+        int amount;
+
+        cout<<"\nEnter payment amount: ";
+        cin>>amount;
+
+        if(amount <= 0)
+            throw "Invalid Payment Amount!";
+
+        if(amount < total)
+            throw "Insufficient Payment!";
+
+        cout<<"\nPayment Successful!";
+        cout<<"\nChange Returned: Rs. "<<amount-total;
+
+        total = 0;
+    }
+};
+
+int main()
+{
+    FoodOrder f;
+    int choice;
+
+    do
+    {
+        cout<<"\n\n===== ONLINE FOOD ORDERING =====";
+        cout<<"\n1. Display Food Menu";
+        cout<<"\n2. Order Food";
+        cout<<"\n3. Show Bill";
+        cout<<"\n4. Make Payment";
+        cout<<"\n5. Exit";
+
+        cout<<"\nEnter your choice: ";
+        cin>>choice;
+
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                    f.displayMenu();
+                    break;
+
+                case 2:
+                    f.orderFood();
+                    break;
+
+                case 3:
+                    f.showBill();
+                    break;
+
+                case 4:
+                    f.payment();
+                    break;
+
+                case 5:
+                    cout<<"\nThank You!";
+                    break;
+
+                default:
+                    throw "Invalid Choice!";
+            }
+        }
+
+        catch(const char *msg)
+        {
+            cout<<"\nException: "<<msg;
+        }
+
+        cout<<"\nOperation Completed.";
+
+    }while(choice != 5);
+
+    return 0;
+}
