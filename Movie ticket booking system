@@ -1,0 +1,149 @@
+
+#include<iostream>
+using namespace std;
+
+// Abstract Base Class
+class Movie
+{
+    protected:
+    int seats;
+    int price;
+
+    public:
+
+    Movie()
+    {
+        seats = 10;
+        price = 150;
+    }
+
+    virtual void display()
+    {
+        cout<<"\nMovie Ticket Booking";
+    }
+};
+
+// Derived Class
+class Booking : public Movie
+{
+    private:
+    int tickets;
+
+    public:
+
+    Booking()
+    {
+        tickets = 0;
+    }
+
+    // Function Overriding
+    void display()
+    {
+        cout<<"\n\n===== MOVIE BOOKING =====";
+        cout<<"\nTicket Price: Rs. "<<price;
+        cout<<"\nAvailable Seats: "<<seats;
+    }
+
+    void bookTicket()
+    {
+        int n;
+
+        cout<<"\nEnter number of tickets: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid Ticket Quantity!";
+
+        if(n > seats)
+            throw "Not Enough Seats Available!";
+
+        tickets = tickets + n;
+        seats = seats - n;
+
+        cout<<"\nTickets Booked Successfully!";
+        cout<<"\nTotal Amount: Rs. "<<n*price;
+    }
+
+    void cancelTicket()
+    {
+        int n;
+
+        cout<<"\nEnter tickets to cancel: ";
+        cin>>n;
+
+        if(n <= 0 || n > tickets)
+            throw "Invalid Cancellation!";
+
+        tickets = tickets - n;
+        seats = seats + n;
+
+        cout<<"\nTickets Cancelled Successfully!";
+    }
+
+    void showTickets()
+    {
+        cout<<"\nBooked Tickets: "<<tickets;
+        cout<<"\nAvailable Seats: "<<seats;
+    }
+};
+
+int main()
+{
+    Booking b;
+    Movie *m;
+
+    m = &b;
+
+    int choice;
+
+    do
+    {
+        cout<<"\n\n1. Display Movie";
+        cout<<"\n2. Book Ticket";
+        cout<<"\n3. Cancel Ticket";
+        cout<<"\n4. Show Booking Details";
+        cout<<"\n5. Exit";
+
+        cout<<"\nEnter Choice: ";
+        cin>>choice;
+
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                    m->display();
+                    break;
+
+                case 2:
+                    b.bookTicket();
+                    break;
+
+                case 3:
+                    b.cancelTicket();
+                    break;
+
+                case 4:
+                    b.showTickets();
+                    break;
+
+                case 5:
+                    cout<<"\nThank You!";
+                    break;
+
+                default:
+                    throw "Invalid Choice!";
+            }
+        }
+
+        catch(const char *msg)
+        {
+            cout<<"\nException: "<<msg;
+        }
+
+        cout<<"\nOperation Completed.";
+
+    }while(choice != 5);
+
+    return 0;
+}
