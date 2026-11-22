@@ -1,0 +1,151 @@
+
+#include<iostream>
+using namespace std;
+
+// Base Class
+class Product
+{
+    protected:
+    int price;
+    int stock;
+
+    public:
+
+    Product()
+    {
+        price = 500;
+        stock = 10;
+    }
+
+    virtual void display() = 0;
+};
+
+// Derived Class
+class Shopping : public Product
+{
+    private:
+    int quantity;
+    int total;
+
+    public:
+
+    Shopping()
+    {
+        quantity = 0;
+        total = 0;
+    }
+
+    // Function Overriding
+    void display()
+    {
+        cout<<"\n===== PRODUCT DETAILS =====";
+        cout<<"\nProduct: Headphones";
+        cout<<"\nPrice: Rs. "<<price;
+        cout<<"\nAvailable Stock: "<<stock;
+    }
+
+    void purchase()
+    {
+        int n;
+
+        cout<<"\nEnter quantity: ";
+        cin>>n;
+
+        if(n <= 0)
+            throw "Invalid Quantity!";
+
+        if(n > stock)
+            throw "Product Out of Stock!";
+
+        quantity = quantity + n;
+        stock = stock - n;
+        total = total + (n * price);
+
+        cout<<"\nProduct Purchased Successfully!";
+    }
+
+    void showBill()
+    {
+        cout<<"\nTotal Quantity: "<<quantity;
+        cout<<"\nTotal Bill: Rs. "<<total;
+    }
+
+    void returnProduct()
+    {
+        int n;
+
+        cout<<"\nEnter quantity to return: ";
+        cin>>n;
+
+        if(n <= 0 || n > quantity)
+            throw "Invalid Return Quantity!";
+
+        quantity = quantity - n;
+        stock = stock + n;
+        total = total - (n * price);
+
+        cout<<"\nProduct Returned Successfully!";
+    }
+};
+
+int main()
+{
+    Shopping s;
+    Product *p;
+
+    p = &s;
+
+    int choice;
+
+    do
+    {
+        cout<<"\n\n===== ONLINE SHOPPING =====";
+        cout<<"\n1. Display Product";
+        cout<<"\n2. Purchase Product";
+        cout<<"\n3. Show Bill";
+        cout<<"\n4. Return Product";
+        cout<<"\n5. Exit";
+
+        cout<<"\nEnter Choice: ";
+        cin>>choice;
+
+        try
+        {
+            switch(choice)
+            {
+                case 1:
+                    p->display();
+                    break;
+
+                case 2:
+                    s.purchase();
+                    break;
+
+                case 3:
+                    s.showBill();
+                    break;
+
+                case 4:
+                    s.returnProduct();
+                    break;
+
+                case 5:
+                    cout<<"\nThank You for Shopping!";
+                    break;
+
+                default:
+                    throw "Invalid Choice!";
+            }
+        }
+
+        catch(const char *msg)
+        {
+            cout<<"\nException: "<<msg;
+        }
+
+        cout<<"\nOperation Completed.";
+
+    }while(choice != 5);
+
+    return 0;
+}
