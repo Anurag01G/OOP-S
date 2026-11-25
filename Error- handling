@@ -1,0 +1,33 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ofstream fout("data.txt");
+    fout << "Hello C++";
+    fout.close();
+
+    ifstream fin("data.txt");
+
+    if(fin.good())
+        cout << "File opened successfully\n";
+
+    string s;
+
+    while(fin >> s)
+        cout << s << endl;
+
+    if(fin.eof())
+        cout << "End of file reached\n";
+
+    if(fin.fail())
+        cout << "Reading operation failed\n";
+
+    if(fin.bad())
+        cout << "Serious file error\n";
+
+    fin.close();
+
+    return 0;
+}
